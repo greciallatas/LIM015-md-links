@@ -13,16 +13,14 @@ const fetch = require('node-fetch');
 
 const existPath = (route) => fs.existsSync(route); // Verifica si la ruta existe, true or false
 
-const verifyAbsolutePath = (route) => (
+const convertAbsolutePath = (route) => (
     //Retorna un booleano: true or false
     path.isAbsolute(route) ? route : path.resolve(route)
 );
 
-// const file = (route) => fs.statSync(route).isFile(); // Verificar si el archivo existe,
+const readFile = (route) => fs.readFileSync(route, { encoding: "utf-8", flag: "r" }); // Lee archivos
 
-const readFile = (route) => fs.readFileSync(route, 'utf8');
-
-const directory = (route) => fs.statSync(route).isDirectory(); // Verificar si el archivo exist
+const directory = (route) => fs.statSync(route).isDirectory(); // Verificar si es directorio
 
 const readDirectory = (route) => fs.readdirSync(route); // Lee la ruta que se ingresa
 
@@ -36,7 +34,8 @@ const getAllMDFiles = (route) => { // Se obtienen todos los archivos .md
             return accumulator.concat(recursive);
         }, []);
     }else if(path.extname(route) === '.md'){
-        arrayFile.push(route);
+        const pathAbsolute = convertAbsolutePath(route);
+        arrayFile.push(pathAbsolute);
     }
     return arrayFile;
 }
@@ -44,9 +43,9 @@ const getAllMDFiles = (route) => { // Se obtienen todos los archivos .md
 const searchAllMDLinks = (route) => { // Se obtienen todos los links de un archivo .md
     const arrayLinks = [];
 
-    const pathAbsolute = verifyAbsolutePath(route);
+    // const pathAbsolute = convertAbsolutePath(route);
 
-    getAllMDFiles(pathAbsolute).forEach((archive) => {
+    getAllMDFiles(route).forEach((archive) => {
 
         const regexr = /\[(.*)\]\((https*?:([^"')\s]+))\)/gi;
         const regexrLink = /https*?:([^"')\s]+)/mg;
@@ -54,14 +53,16 @@ const searchAllMDLinks = (route) => { // Se obtienen todos los links de un archi
 
         const file = readFile(archive).match(regexr);
 
-        if (file) {
+        if (file !== null) {
+
             file.forEach((links) => {
+
                 const link = links.match(regexrLink).join();
                 const text = links.match(regexrText).join().slice(1, -1);
 
                 arrayLinks.push({
-                    text: text,
                     href: link,
+                    text: text,
                     file: archive,
                 })
             })
@@ -71,35 +72,38 @@ const searchAllMDLinks = (route) => { // Se obtienen todos los links de un archi
 }
 
 const statusAllMDLinks = (arrayMDLinks) => {
-    const links = arrayMDLinks.map((mdLink) => fetch(mdLink.href)
-    .then((response) => {
-        if (response.ok) {
+    const links = arrayMDLinks.map((mdLink) => {
+
+        return fetch(mdLink.href)
+        .then((response) => {
+            const mesaggeText = response.status == 200 ? response.ok : false;
+
             return {
                 ...mdLink,
                 status: response.status,
-                message: response.statusText,
-            }
-        }
-    })
-    .catch(() => {
-        return {
-            ...mdLink,
-            status: 404,
-            message: 'FAIL',
-        }
-    }));
-    return Promise.all(links);
+                ok: mesaggeText,
+            };
+        })
+        .catch(() => {
+            return {
+                ...mdLink,
+                status: 404,
+                ok: false,
+            };
+        });
+    });
+    return links;
 };
 
 // console.log(getAllMDFiles('./markDown'));
-// console.log(searchAllMDLinks('./markDown'));
-// const prueba = searchAllMDLinks('./markDown');
+// console.log(searchAllMDLinks('C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD'));
+// const prueba = searchAllMDLinks('C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD');
 // console.log(prueba);
 // console.log(statusAllMDLinks(prueba));
 
 module.exports = {
                     existPath,
-                    verifyAbsolutePath,
+                    convertAbsolutePath,
                     directory,
                     readDirectory,
                     getAllMDFiles,

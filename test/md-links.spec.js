@@ -45,7 +45,11 @@ describe('Get all  files Markdown', () => {
   it('should return files markdown of directory', () => {
     let path = mdLinks.getAllMDFiles('./markDown');
 
-    let result = ["markDown\\path.md", "markDown\\pruebaMD\\prueba.md", "markDown\\pruebaMD\\prueba2\\prueba2.md"];
+    let result = [
+                    'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md',
+                    'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD\\prueba.md',
+                    'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD\\prueba2\\prueba2.md'
+                  ];
 
     expect(path).toEqual(result);
   });
@@ -53,59 +57,9 @@ describe('Get all  files Markdown', () => {
 
 describe('Search all MD Links', () => {
   it('should return href, text, file of file markdown', () => {
-    let path = mdLinks.searchAllMDLinks('./markDown');
+    let path = mdLinks.searchAllMDLinks('C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD');
 
     let result = [
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathbasename',
-                    text: 'path.basename()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathdirname',
-                    text: 'path.dirname()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathextname',
-                    text: 'path.extname()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathformat',
-                    text: 'path.format()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathisabsolute',
-                    text: 'path.isAbsolute()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathjoin',
-                    text: 'path.join()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathnormalize',
-                    text: 'path.normalize()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathparse',
-                    text: 'path.parse()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathrelative',
-                    text: 'path.relative()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
-                  {
-                    href: 'https://nodejs.dev/learn/the-nodejs-path-module#pathresolve',
-                    text: 'path.resolve()',
-                    file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\path.md'
-                  },
                   {
                     href: 'https://www.geeksforgeeks.org/file-isfile-method-in-java-with-examples/',
                     text: 'isFile()',

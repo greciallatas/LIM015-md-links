@@ -1,23 +1,27 @@
 const API = require('../src/index.js');
+const chalk = require('chalk');
+const {noLinks, noExist} = require('../src/stats.js');
 
-const mdLinks = (path, options = { validate: false }) => new Promise((resolve, reject) => {
+const mdLinks = (path, options) => new Promise((resolve, reject) => {
 
-    if (API.existPath(API.verifyAbsolutePath(path)) === true) {
+    if (API.existPath(path)) {
+        const searchLinks = API.searchAllMDLinks(path);
+
         if (options.validate === true) {
-            const getMDLinks = API.statusAllMDLinks(API.searchAllMDLinks(path));
-            resolve(getMDLinks);
+            const getMDLinks = API.statusAllMDLinks(searchLinks);
+            resolve(Promise.all(getMDLinks));
         }else{
-            resolve(API.searchAllMDLinks(path));
+            resolve(searchLinks);
         }
     } else {
-        reject('The path doesn\'t exist');
+        reject(noExist);
     }
 });
 
 // const prueba1 = 'markDown\\path.md';
 // console.log(mdLinks(prueba1, true).then((response) => console.log(response)));
 
-const prueba2 = 'markDown\\pruebaMD\\prueba.md';
-console.log(mdLinks(prueba2, true).then((response) => console.log(response)));
+// const prueba2 = 'markDown\\pruebaMD';
+// console.log(mdLinks(prueba2, false).then((response) => console.log(response)));
 
 module.exports = { mdLinks };
