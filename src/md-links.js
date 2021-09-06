@@ -3,25 +3,24 @@ const chalk = require('chalk');
 const {noLinks, noExist} = require('../src/stats.js');
 
 const mdLinks = (path, options) => new Promise((resolve, reject) => {
+    const pathAbsolute = API.convertAbsolutePath(path);
 
-    if (API.existPath(path)) {
+    if (API.existPath(pathAbsolute)) {
         const searchLinks = API.searchAllMDLinks(path);
 
-        if (options.validate === true) {
-            const getMDLinks = API.statusAllMDLinks(searchLinks);
-            resolve(Promise.all(getMDLinks));
-        }else{
-            resolve(searchLinks);
+        if (searchLinks.length === 0) {
+            reject(noLinks);
+        } else {
+            if (options.validate === true) {
+                const getMDLinks = API.statusAllMDLinks(searchLinks);
+                resolve(Promise.all(getMDLinks));
+            }else{
+                resolve(searchLinks);
+            }
         }
     } else {
         reject(noExist);
     }
 });
-
-// const prueba1 = 'markDown\\path.md';
-// console.log(mdLinks(prueba1, true).then((response) => console.log(response)));
-
-// const prueba2 = 'markDown\\pruebaMD';
-// console.log(mdLinks(prueba2, false).then((response) => console.log(response)));
 
 module.exports = { mdLinks };

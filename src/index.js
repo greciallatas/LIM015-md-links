@@ -7,10 +7,6 @@ const fs = require('fs');
 
 const fetch = require('node-fetch');
 
-// const showdown = require('showdown');
-// const convert = new showdown.Converter();
-
-
 const existPath = (route) => fs.existsSync(route); // Verifica si la ruta existe, true or false
 
 const convertAbsolutePath = (route) => (
@@ -42,8 +38,6 @@ const getAllMDFiles = (route) => { // Se obtienen todos los archivos .md
 
 const searchAllMDLinks = (route) => { // Se obtienen todos los links de un archivo .md
     const arrayLinks = [];
-
-    // const pathAbsolute = convertAbsolutePath(route);
 
     getAllMDFiles(route).forEach((archive) => {
 
@@ -95,15 +89,10 @@ const statusAllMDLinks = (arrayMDLinks) => {
     return links;
 };
 
-// console.log(getAllMDFiles('./markDown'));
-// console.log(searchAllMDLinks('C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD'));
-// const prueba = searchAllMDLinks('C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD');
-// console.log(prueba);
-// console.log(statusAllMDLinks(prueba));
-
 module.exports = {
                     existPath,
                     convertAbsolutePath,
+                    readFile,
                     directory,
                     readDirectory,
                     getAllMDFiles,
