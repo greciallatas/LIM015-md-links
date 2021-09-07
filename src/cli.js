@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const {statsLinks, brokenLinks, help, noLinks} = require('../src/stats.js');
+const {statsLinks, brokenLinks, help, noLinks, noExist} = require('../src/stats.js');
 const {mdLinks} = require('../src/md-links.js');
 
 const process = require('process');
@@ -52,7 +52,7 @@ if (options.length === 0){
         mdLinks(path, {validate:true})
         .then(console.log(help))
         .catch(() => {
-            console.log(noLinks);
+            console.log(noExist);
         })
     }
 }
