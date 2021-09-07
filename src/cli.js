@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const {statsLinks, brokenLinks, help, noLinks} = require('../src/stats.js');
 const {mdLinks} = require('../src/md-links.js');
 
