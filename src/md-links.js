@@ -1,5 +1,4 @@
 const API = require('../src/index.js');
-const chalk = require('chalk');
 const {noLinks, noExist} = require('../src/stats.js');
 
 const mdLinks = (path, options) => new Promise((resolve, reject) => {

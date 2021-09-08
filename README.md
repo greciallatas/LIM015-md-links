@@ -44,7 +44,7 @@ npm install grellatas-mdlinks
 ```js
 const mdLinks = require('grellatas-mdlinks');
 ```
-El módulo debe importarse en otros scripts de `Node.js` y ofrece la siguiente interfaz.
+El módulo debe importarse en otros scripts de `Node.js` y ofrece la siguiente interfaz:
 
 `mdLinks(path, options)`
 
