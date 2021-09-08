@@ -1,4 +1,5 @@
-const stats = require('../src/stats.js');
+const {statsLinks, brokenLinks} = require('../src/stats.js');
+const chalk = require('chalk');
 
 const links = [{
                     href: 'https://www.geeksforgeeks.org/file-isfile-method-in-java-with-examples/',
@@ -31,23 +32,22 @@ const links = [{
 
 describe('Stats Links', () => {
     it('is a function', () => {
-        expect(typeof stats.statsLinks).toBe('function');
+        expect(typeof statsLinks).toBe('function');
     });
 
     it('should return total number of links and unique links', () => {
-        let result = `Total: 4
-        Unique: 3`;
-        expect(stats.statsLinks(links)).toBe(result);
+        let result = chalk.green(`Total: 4`) +'\n'+ chalk.yellow(`Unique: 3`);
+        expect(statsLinks(links)).toBe(result);
     });
 });
 
 describe('Broken Links', () => {
     it('is a function', () => {
-        expect(typeof stats.brokenLinks).toBe('function');
+        expect(typeof brokenLinks).toBe('function');
     });
 
     it('should return broken number of links', () => {
-        let result = 'Broken: 1';
-        expect(stats.brokenLinks(links)).toBe(result);
+        let result = chalk.red('Broken: 1');
+        expect(brokenLinks(links)).toBe(result);
     });
 });

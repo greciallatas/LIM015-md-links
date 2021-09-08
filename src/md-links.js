@@ -6,12 +6,12 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
     const pathAbsolute = API.convertAbsolutePath(path);
 
     if (API.existPath(pathAbsolute)) {
-        const searchLinks = API.searchAllMDLinks(path);
+        const searchLinks = API.searchAllMDLinks(pathAbsolute);
 
         if (searchLinks.length === 0) {
             reject(noLinks);
         } else {
-            if (options.validate === true) {
+            if (options.validate) {
                 const getMDLinks = API.statusAllMDLinks(searchLinks);
                 resolve(Promise.all(getMDLinks));
             }else{

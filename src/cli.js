@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const {statsLinks, brokenLinks, help, noLinks, noExist} = require('../src/stats.js');
+const {statsLinks, brokenLinks, help} = require('../src/stats.js');
 const {mdLinks} = require('../src/md-links.js');
 
 const process = require('process');
@@ -17,8 +17,8 @@ if (path === '--help') {
 
 if (options.length === 0){
     mdLinks(path, {validate:false})
-    .then((response) => {
-        console.log(response);
+    .then((resolve) => {
+        console.log(resolve);
     })
     .catch((reject)=>{
             console.log(reject);
@@ -26,33 +26,33 @@ if (options.length === 0){
 }else {
     if (validate && stats){
         mdLinks(path, {validate:true, stats:true})
-        .then((response) =>{
-            console.log(statsLinks(response) + '\n' + brokenLinks(response));
+        .then((resolve) =>{
+            console.log(statsLinks(resolve) + '\n' + brokenLinks(resolve));
         })
-        .catch(() => {
-            console.log(noLinks);
+        .catch((reject) => {
+            console.log(reject);
         })
     }else if (validate){
         mdLinks(path, {validate:true})
-        .then((response) => {
-            console.log(response);
+        .then((resolve) => {
+            console.log(resolve);
         })
-        .catch(() => {
-            console.log(noLinks);
+        .catch((reject) => {
+            console.log(reject);
         })
     }else if(stats){
         mdLinks(path, {stats:true})
-        .then((response) => {
-            console.log(statsLinks(response));
+        .then((resolve) => {
+            console.log(statsLinks(resolve));
         })
-        .catch(() => {
-            console.log(noLinks);
+        .catch((reject) => {
+            console.log(reject);
         })
     }else {
         mdLinks(path, {validate:true})
         .then(console.log(help))
         .catch(() => {
-            console.log(noExist);
+            console.log('help');
         })
     }
 }

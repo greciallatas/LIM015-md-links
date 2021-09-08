@@ -1,4 +1,5 @@
 const {mdLinks} = require('../src/md-links.js');
+const stats = require('../src/stats.js');
 
 const path = 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD';
 const validateTrue= [{
@@ -49,10 +50,10 @@ const validateFalse = [{
                     text: 'GitHub',
                     file: 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD\\prueba.md'
                 }];
-const notLinks = 'C:\\Users\\greci\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD\\prueba2\\prueba2.md';
+const notLinks = 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\pruebaMD\\prueba2\\prueba2.md';
 const pathFail = 'C:\\Users\\greci\\Documents\\labProjects\\LIM015-md-links\\markDown\\prubaMD';
 
-describe('mdlinks', () => {
+describe('md-links', () => {
     it('is a function', () => {
         expect(typeof mdLinks).toBe('function');
     });
@@ -66,10 +67,10 @@ describe('mdlinks', () => {
     });
 
     it('should return error message: No links found', () => {
-        return expect(mdLinks(notLinks, {validate:false})).reject.toBe('No links found');
+        return expect(mdLinks(notLinks, {validate:false})).rejects.toBe(stats.noLinks);
     });
 
     it("should return error message: The path doesn't exist", () => {
-        return expect(mdLinks(pathFail, {validate:false})).reject.toBe("The path doesn't exist");
+        return expect(mdLinks(pathFail, {validate:false})).rejects.toBe(stats.noExist);
     });
 });
